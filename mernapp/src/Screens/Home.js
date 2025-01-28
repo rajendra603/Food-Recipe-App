@@ -9,7 +9,7 @@ export default function Home() {
   const [search, setsearch] = useState("");
   const [foodCat, setfoodCat] = useState([]);
   const [foodItem, setfoodItem] = useState([]);
-
+  /// local url =  http://localhost:5000/foodData
   const loadData = async () => {
     let response = await fetch("https://food-app-00un.onrender.com", {
       method: "POST",
