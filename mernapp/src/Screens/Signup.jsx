@@ -13,17 +13,20 @@ export default function Signup() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:5000/createuser", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: credential.name,
-          email: credential.email,
-          password: credential.password,
-        }),
-      });
+      const response = await fetch(
+        "https://food-app-00un.onrender.com/createuser",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: credential.name,
+            email: credential.email,
+            password: credential.password,
+          }),
+        }
+      );
       const json = await response.json();
       console.log(json);
       if (response.status !== 200) {

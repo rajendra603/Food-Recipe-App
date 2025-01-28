@@ -5,28 +5,22 @@ import Card from "../Components/Card";
 import BurgerImg from "./Images/burger.jpg";
 import FrenchFries from "./Images/frenchfries.jpg";
 import Pizza from "./Images/Pizza.jpg";
-
 export default function Home() {
   const [search, setsearch] = useState("");
   const [foodCat, setfoodCat] = useState([]);
   const [foodItem, setfoodItem] = useState([]);
-
-  // Update to use GET request to fetch data
+  /// local url =  http://localhost:5000/foodData
   const loadData = async () => {
-    try {
-      let response = await fetch(
-        "https://food-app-00un.onrender.com/foodData",
-        {
-          method: "GET", // Use GET to fetch data
-        }
-      );
-      const data = await response.json();
-      console.log(data); // Log the response structure to check it
-      setfoodItem(data[0]); // Assuming the response structure is [foodItems, foodCategories]
-      setfoodCat(data[1]);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
+    let response = await fetch("https://food-app-00un.onrender.com/foodData", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    response = await response.json();
+    // console.log(response[0], response[1]);
+    setfoodItem(response[0]);
+    setfoodCat(response[1]);
   };
 
   useEffect(() => {
@@ -90,6 +84,12 @@ export default function Home() {
                       setsearch(e.target.value);
                     }}
                   />
+                  {/* <button
+                    className="btn btn-outline-success text-white bg-success"
+                    type="submit"
+                  >
+                    Search
+                  </button> */}
                 </div>
               </div>
             </div>
@@ -173,8 +173,10 @@ export default function Home() {
         {foodCat.length > 0 ? (
           foodCat.map((data, index) => {
             return (
-              <div className="row mb-3" key={data._id}>
-                <div className="fs-3 m-3">{data.CategoryName}</div>
+              <div className="row mb-3">
+                <div key={data._id} className="fs-3  m-3">
+                  {data.CategoryName}
+                </div>
                 <hr />
                 {foodItem.length > 0 ? (
                   foodItem
@@ -191,7 +193,9 @@ export default function Home() {
                         >
                           <Card
                             foodItem={filterItems}
+                            // foodName={filterItems.name}
                             options={filterItems.options[0]}
+                            // imgsrc={filterItems.img}
                           ></Card>
                         </div>
                       );
@@ -205,6 +209,8 @@ export default function Home() {
         ) : (
           <div>No data available</div>
         )}
+
+        {/* <Card /> */}
       </div>
 
       <div>
