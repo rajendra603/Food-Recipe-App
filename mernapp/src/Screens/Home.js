@@ -207,7 +207,7 @@ export default function Home() {
             );
           })
         ) : (
-          <div>No data available</div>
+          <div>Loading</div>
         )}
 
         {/* <Card /> */}
