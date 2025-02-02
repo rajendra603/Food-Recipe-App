@@ -9,9 +9,11 @@ export default function Home() {
   const [search, setsearch] = useState("");
   const [foodCat, setfoodCat] = useState([]);
   const [foodItem, setfoodItem] = useState([]);
+
   /// local url =  http://localhost:5000/foodData
+  // render url = https://food-app-00un.onrender.com/foodData
   const loadData = async () => {
-    let response = await fetch("https://food-app-00un.onrender.com/foodData", {
+    let response = await fetch("  http://localhost:5000/foodData", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -28,11 +30,17 @@ export default function Home() {
   }, []);
 
   return (
-    <div>
+    <div
+      style={{
+        background: "linear-gradient(to bottom, white,rgb(175, 126, 133))",
+        minHeight: "100vh",
+      }}
+    >
       <div>
         <Navbar />
       </div>
-      <div>
+
+      <div className="mt-4 ">
         <div
           id="carouselExampleCaptions"
           className="carousel slide carousel-fade"
@@ -69,7 +77,7 @@ export default function Home() {
                 style={{
                   height: "500px",
                   objectFit: "cover",
-                  filter: "brightness(65%)",
+                  filter: "brightness(100%)",
                 }}
               />
               <div className="carousel-caption d-none d-md-block">
@@ -84,12 +92,6 @@ export default function Home() {
                       setsearch(e.target.value);
                     }}
                   />
-                  {/* <button
-                    className="btn btn-outline-success text-white bg-success"
-                    type="submit"
-                  >
-                    Search
-                  </button> */}
                 </div>
               </div>
             </div>
@@ -101,7 +103,7 @@ export default function Home() {
                 style={{
                   height: "500px",
                   objectFit: "cover",
-                  filter: "brightness(65%)",
+                  filter: "brightness(100%)",
                 }}
               />
               <div className="carousel-caption d-none d-md-block">
@@ -125,7 +127,7 @@ export default function Home() {
                 style={{
                   height: "500px",
                   objectFit: "cover",
-                  filter: "brightness(65%)",
+                  filter: "brightness(100%)",
                 }}
               />
               <div className="carousel-caption d-none d-md-block">

@@ -16,7 +16,12 @@ export default function Navbar() {
   };
   return (
     <div>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-success">
+      <nav
+        className="navbar navbar-expand-lg navbar-dark "
+        style={{
+          backgroundColor: "#8B4513",
+        }}
+      >
         <div className="container-fluid">
           <Link className="navbar-brand fs-1 fst-italic" to="/">
             Tasty Bites
@@ -33,14 +38,32 @@ export default function Navbar() {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav me-auto">
-              <li className="nav-item">
+            <ul className="navbar-nav  mx-auto">
+              <li className="nav-item ">
                 <Link
                   className="nav-link active fs-5 "
                   aria-current="page"
                   to="/"
                 >
                   Home
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="nav-link active fs-5 "
+                  aria-current="page"
+                  to="/about"
+                >
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="nav-link active fs-5 "
+                  aria-current="page"
+                  to="/about"
+                >
+                  Contact Us
                 </Link>
               </li>
 
@@ -61,12 +84,23 @@ export default function Navbar() {
 
             {!localStorage.getItem("authToken") ? (
               <div className="d-flex">
-                <Link className="btn bg-white text-success mx-1" to="/login">
+                <Link
+                  className="custom-btn btn  mx-1"
+                  style={{
+                    color: "#8B4513",
+                    backgroundColor: "white",
+                  }}
+                  to="/login"
+                >
                   Login
                 </Link>
 
                 <Link
-                  className="btn bg-white text-success mx-1"
+                  className=" custom-btn btn  mx-1"
+                  style={{
+                    color: "#8B4513",
+                    backgroundColor: "white",
+                  }}
                   to="/createuser"
                 >
                   SignUp

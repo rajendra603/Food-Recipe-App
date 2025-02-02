@@ -68,7 +68,7 @@ export default function Card(props) {
   let finalPrice = qty * (options[size] || 0); // Use default 0 if size is not selected
 
   return (
-    <div>
+    <div className="card-container">
       <div
         className="card mt-4"
         style={{ width: "18rem", maxHeight: "500px", overflow: "hidden" }}
@@ -80,11 +80,22 @@ export default function Card(props) {
           style={{ height: "180px", objectFit: "fill" }}
         />
         <div className="card-body d-flex flex-column justify-content-between">
-          <h5 className="card-title">{props.foodItem.name}</h5>
-          <p className="card-text">Lorem ipsum dolor sit amet.</p>
+          <h5
+            className="card-title"
+            style={{
+              color: "#8B4513",
+            }}
+          >
+            {props.foodItem.name}
+          </h5>
+          <p className="card-text">A perfect blend of taste and quality.</p>
           <div className="container w-100">
             <select
-              className="m-2 h-100 bg-success rounded"
+              style={{
+                backgroundColor: "#8B4513",
+                color: "white",
+              }}
+              className="m-2 h-100  rounded"
               onChange={(e) => setQty(parseInt(e.target.value))}
             >
               {Array.from(Array(6), (e, i) => {
@@ -96,7 +107,11 @@ export default function Card(props) {
               })}
             </select>
             <select
-              className="m-2 h-100 bg-success rounded"
+              style={{
+                backgroundColor: "#8B4513",
+                color: "white",
+              }}
+              className="m-2 h-100 rounded"
               onChange={(e) => setSize(e.target.value)}
               ref={priceRef}
             >
@@ -111,7 +126,13 @@ export default function Card(props) {
             <div className="d-inline fs-5">₹{finalPrice}/-</div>
           </div>
           <hr />
-          <button className="btn btn-success w-100" onClick={handleAddToCart}>
+          <button
+            className="btn btn-success w-100"
+            style={{
+              backgroundColor: "#8B4513",
+            }}
+            onClick={handleAddToCart}
+          >
             Add to Cart
           </button>
         </div>

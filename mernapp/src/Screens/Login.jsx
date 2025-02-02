@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import Navbar from "../Components/Navbar";
 
 export default function Login() {
   const [credential, setcredential] = useState({
@@ -28,16 +30,16 @@ export default function Login() {
       const json = await response.json();
       console.log(json);
       if (!json.success) {
-        alert(json.message);
+        toast.error(json.message || "Login failed!");
       } else {
-        alert(json.message);
+        toast.success(json.message || "Login successful!");
         localStorage.setItem("authToken", json.authToken);
         console.log(localStorage.getItem("authToken"));
         navigate("/");
       }
     } catch (error) {
       console.error("Error during login:", error);
-      alert("There was an error. Please try again.");
+      toast.error("There was an error. Please try again.");
     }
   };
   const onchange = (event) => {
@@ -45,25 +47,22 @@ export default function Login() {
   };
   return (
     <div
-      className="  d-flex justify-content-center align-items-center vh-100 bg-light"
-      style={{}}
+      style={{
+        background: "linear-gradient(to bottom, white,rgb(126, 81, 88))",
+        minHeight: "100vh",
+      }}
     >
-      <div
-        className="d-flex justify-content-center align-items-center"
-        style={{
-          width: "350px",
-          height: "400px",
-          borderRadius: "10px",
-          backgroundColor: "darkgray",
-        }}
-      >
-        <form onSubmit={handlesubmit}>
-          <div className="mb-3 text-black fs-5">
+      <Navbar />
+      <div className="container-fluid">
+        <form className="mx-auto" onSubmit={handlesubmit}>
+          <h2 className="text-center">Login</h2>
+          <div className="mb-3 mt-5 text-black fs-5">
             <label htmlFor="exampleInputEmail1" className="form-label">
               Email address
             </label>
             <input
               type="email"
+              placeholder="Enter your Email"
               className="form-control"
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
@@ -79,6 +78,7 @@ export default function Login() {
             </label>
             <input
               type="password"
+              placeholder="Enter your password"
               className="form-control"
               id="exampleInputPassword1"
               name="password"
@@ -87,11 +87,21 @@ export default function Login() {
             />
           </div>
 
-          <button type="submit" className=" m-3 btn btn-success">
-            Submit
+          <button
+            type="submit"
+            className="w-100 mt-3 btn  rounded-5"
+            style={{
+              backgroundColor: "#8B4513",
+              color: "white",
+            }}
+          >
+            Login
           </button>
-          <Link to={"/createuser"} className=" m-3 btn btn-danger">
-            New User
+          <Link
+            to={"/createuser"}
+            className="w-100 mt-3 btn btn-danger rounded-5"
+          >
+            New User-Sing Up
           </Link>
         </form>
       </div>

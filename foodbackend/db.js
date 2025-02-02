@@ -13,11 +13,17 @@ export const mongoDB = async () => {
     const database = client.db("FoodApp");
 
     const sampleDataCollection = database.collection("SampleData");
-    const sampleData = await sampleDataCollection.find({}).toArray();
+    const sampleData = await sampleDataCollection
+      .find({})
+      .sort({ CategoryName: 1 })
+      .toArray();
     global.SampleData = sampleData;
 
     const categoryCollection = database.collection("category");
-    const categoryData = await categoryCollection.find({}).toArray();
+    const categoryData = await categoryCollection
+      .find({})
+      .sort({ CategoryName: 1 })
+      .toArray();
     global.CategoryData = categoryData;
   } catch (err) {
     console.error("Error connecting to MongoDB:", err);

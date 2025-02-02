@@ -12,3 +12,42 @@ code {
     monospace;
 }
 
+.custom-btn:hover {
+  background-color: #8B4513; 
+  color: white; 
+  transform: scale(1.05); 
+  
+}
+.card-container {
+  
+  transition: transform 0.3s ease,
+ 
+}
+
+.card-container:hover {
+  transform: scale(1.05); 
+ 
+}
+form{
+  width: 25%;
+  background-color: white;
+  padding: 40px;
+  border-radius: 20px;
+  margin-top: 45px;
+  
+}
+
+.form-control{
+  color: #8B4513;
+  border-bottom:  #8B4513;
+  box-shadow: none !important;
+  border: none;
+  border-bottom: 1px solid;
+
+}
+
+@media only screen and (max-width: 600px) {
+  form {
+    width: 100% !important;
+  }
+}
