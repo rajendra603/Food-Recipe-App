@@ -18,7 +18,6 @@ const LoginRouter = Router();
 LoginRouter.post(
   "/loginuser",
   [
-    body("name").notEmpty().withMessage("Name is required"),
     body("email").isEmail().withMessage("Enter a valid email"),
     body("password")
       .isLength({ min: 6 })
@@ -33,7 +32,7 @@ LoginRouter.post(
       });
     }
 
-    const { name, email, password } = req.body;
+    const { email, password } = req.body;
     try {
       await client.connect();
       const db = client.db(dbName);

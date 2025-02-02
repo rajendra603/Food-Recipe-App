@@ -4,7 +4,7 @@ const mongoURI =
   "mongodb+srv://bansodrajendra23:rajendra23@cluster0.dtuzx.mongodb.net/";
 
 export const mongoDB = async () => {
-  const client = new MongoClient(mongoURI); // No need to include deprecated options
+  const client = new MongoClient(mongoURI);
 
   try {
     await client.connect();

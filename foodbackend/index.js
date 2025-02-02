@@ -29,8 +29,8 @@ const startServer = async () => {
     app.use("/", getuserRouter);
     app.use("/", LoginRouter);
 
-    app.listen(5000, () => {
-      console.log("Server is running on port 5000");
+    app.listen(process.env.PORT || 5000, () => {
+      console.log(`Server is running on port ${process.env.PORT || 5000}`);
     });
   } catch (error) {
     console.error("Error in connecting to MongoDB", error);
