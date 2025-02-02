@@ -20,7 +20,7 @@ export default function Home() {
       },
     });
     response = await response.json();
-    // console.log(response[0], response[1]);
+
     setfoodItem(response[0]);
     setfoodCat(response[1]);
   };
@@ -32,7 +32,7 @@ export default function Home() {
   return (
     <div
       style={{
-        background: "linear-gradient(to bottom, white,rgb(175, 126, 133))",
+        background: "linear-gradient(to bottom, white,rgb(232, 200, 205))",
         minHeight: "100vh",
       }}
     >
