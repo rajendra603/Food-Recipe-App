@@ -144,7 +144,7 @@ export default function Card(props) {
           </button>
           {showLoginPrompt && (
             <div className="alert alert-warning mt-2" role="alert">
-              Please log in to see ur added products
+              Please Log in to add to cart
             </div>
           )}
         </div>
