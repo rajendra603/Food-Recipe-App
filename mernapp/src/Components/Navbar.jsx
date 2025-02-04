@@ -41,7 +41,7 @@ export default function Navbar() {
             <ul className="navbar-nav  mx-auto">
               <li className="nav-item ">
                 <Link
-                  className="nav-link active fs-5 "
+                  className=" nav-link active fs-5 custom-hover "
                   aria-current="page"
                   to="/"
                 >
@@ -50,7 +50,7 @@ export default function Navbar() {
               </li>
               <li>
                 <Link
-                  className="nav-link active fs-5 "
+                  className="nav-link active fs-5 custom-hover"
                   aria-current="page"
                   to="/about"
                 >
@@ -59,7 +59,7 @@ export default function Navbar() {
               </li>
               <li>
                 <Link
-                  className="nav-link active fs-5 "
+                  className="nav-link active fs-5 custom-hover"
                   aria-current="page"
                   to="/contact"
                 >
@@ -70,7 +70,7 @@ export default function Navbar() {
               {localStorage.getItem("authToken") ? (
                 <li className="nav-item">
                   <Link
-                    className="nav-link active fs-5 "
+                    className="nav-link active fs-5 custom-hover"
                     aria-current="page"
                     to="/"
                   >
@@ -109,7 +109,7 @@ export default function Navbar() {
             ) : (
               <div>
                 <div
-                  className="btn bg-white text-success m-3"
+                  className="btn bg-white text-success m-3 custom-hover"
                   onClick={() => {
                     setcartView(true);
                   }}
@@ -127,7 +127,7 @@ export default function Navbar() {
                   ""
                 )}
                 <div
-                  className="btn bg-white text-danger "
+                  className="btn bg-white text-danger custom-hover "
                   onClick={handleLogOut}
                 >
                   Logout
