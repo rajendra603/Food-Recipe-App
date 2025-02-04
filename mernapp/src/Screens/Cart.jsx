@@ -8,7 +8,9 @@ export default function Cart() {
   if (data.length === 0) {
     return (
       <div>
-        <div className="m-5 w-100 tex-center fs-3">The Cart is empty</div>
+        <div className="m-5 w-100 text-center fs-3 text-danger">
+          The Cart is empty
+        </div>
       </div>
     );
   }
