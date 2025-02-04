@@ -9,6 +9,13 @@ export default function Card(props) {
   const priceOptions = Object.keys(options);
   const [qty, setQty] = useState(1);
   const [size, setSize] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showLoginPrompt, setShowLoginPrompt] = useState(false);
+
+  useEffect(() => {
+    const userLoggedIn = localStorage.getItem("authToken");
+    setIsLoggedIn(userLoggedIn ? true : false);
+  }, []);
 
   useEffect(() => {
     if (priceRef.current) {
@@ -17,6 +24,11 @@ export default function Card(props) {
   }, []);
 
   const handleAddToCart = async () => {
+    if (!isLoggedIn) {
+      setShowLoginPrompt(true);
+      return;
+    }
+
     let food = [];
     for (const item of data) {
       if (item.id === props.foodItem._id) {
@@ -24,8 +36,6 @@ export default function Card(props) {
         break;
       }
     }
-    console.log(food);
-    console.log(new Date());
 
     if (food.length > 0) {
       if (food.size === size) {
@@ -46,7 +56,6 @@ export default function Card(props) {
           size: size,
           img: props.foodItem.img,
         });
-        console.log("Size different so simply ADD one more to the list");
         return;
       }
       return;
@@ -61,8 +70,6 @@ export default function Card(props) {
       size: size,
       img: props.foodItem.img,
     });
-
-    // setBtnEnable(true)
   };
 
   let finalPrice = qty * (options[size] || 0); // Use default 0 if size is not selected
@@ -135,6 +142,11 @@ export default function Card(props) {
           >
             Add to Cart
           </button>
+          {showLoginPrompt && (
+            <div className="alert alert-warning mt-2" role="alert">
+              Please log in to see ur added products
+            </div>
+          )}
         </div>
       </div>
     </div>
