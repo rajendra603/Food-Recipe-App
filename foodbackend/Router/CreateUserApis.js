@@ -9,9 +9,9 @@ CreateUserRoutes.post(
   "/createuser",
 
   body("email").isEmail().withMessage("Email must be valid").normalizeEmail(),
-  body("username")
+  body("name")
     .isString()
-    .withMessage("username should be string and should be required"),
+    .withMessage("Name should be string and should be required"),
 
   body("password")
     .isLength({ min: 6 })
@@ -25,7 +25,7 @@ CreateUserRoutes.post(
         errors: errors.array(),
       });
     }
-    const { email, username, password } = req.body;
+    const { email, name, password } = req.body;
     const salt = await bcrypt.genSalt(10);
     const secpassword = await bcrypt.hash(password, salt);
     try {
@@ -36,7 +36,7 @@ CreateUserRoutes.post(
       const db = connection.db("FoodApp");
       await db
         .collection("user")
-        .insertOne({ email, username, password: secpassword });
+        .insertOne({ email, name, password: secpassword });
       res.send({ success: true });
     } catch (error) {
       res.status(500).send({
