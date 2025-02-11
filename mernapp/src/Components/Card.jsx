@@ -11,6 +11,7 @@ export default function Card(props) {
   const [size, setSize] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   useEffect(() => {
     const userLoggedIn = localStorage.getItem("authToken");
@@ -45,6 +46,7 @@ export default function Card(props) {
           price: finalPrice,
           qty: qty,
         });
+        showSuccessPopup();
         return;
       } else if (food.size !== size) {
         await dispatch({
@@ -56,6 +58,7 @@ export default function Card(props) {
           size: size,
           img: props.foodItem.img,
         });
+        showSuccessPopup();
         return;
       }
       return;
@@ -70,9 +73,16 @@ export default function Card(props) {
       size: size,
       img: props.foodItem.img,
     });
+
+    showSuccessPopup();
   };
 
-  let finalPrice = qty * (options[size] || 0); // Use default 0 if size is not selected
+  const showSuccessPopup = () => {
+    setShowSuccessMessage(true);
+    setTimeout(() => setShowSuccessMessage(false), 3000);
+  };
+
+  let finalPrice = qty * (options[size] || 0);
 
   return (
     <div className="card-container">
@@ -145,6 +155,11 @@ export default function Card(props) {
           {showLoginPrompt && (
             <div className="alert alert-warning mt-2" role="alert">
               Please Log in to add to cart
+            </div>
+          )}
+          {showSuccessMessage && (
+            <div className="alert alert-success mt-2" role="alert">
+              Product successfully added to the cart!
             </div>
           )}
         </div>
