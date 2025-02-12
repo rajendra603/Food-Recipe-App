@@ -72,10 +72,8 @@ export default function Navbar() {
                   <Link
                     className="nav-link active fs-5 custom-hover"
                     aria-current="page"
-                    to="/"
-                  >
-                    My Orders
-                  </Link>
+                    to="/myorders"
+                  ></Link>
                 </li>
               ) : (
                 ""

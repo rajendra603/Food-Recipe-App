@@ -7,6 +7,7 @@ import { CartProvider } from "./Components/ContestReducer";
 import Cart from "./Screens/Cart";
 import About from "./Components/About";
 import Contact from "./Components/Contact";
+import MyOrders from "./Components/MyOrders";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/myorders" element={<MyOrders />} />
       </Routes>
     </CartProvider>
   );
