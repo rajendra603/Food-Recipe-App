@@ -36,3 +36,9 @@
     transform: rotate(360deg);
   }
 }
+@media (min-width: 1024px) and (max-width: 1366px) {
+  .custom-card {
+    flex: 0 0 33.33% !important; /* Makes 3 cards per row */
+    max-width: 33.33% !important;
+  }
+}
