@@ -7,7 +7,7 @@ export default function OrderHistory() {
 
   useEffect(() => {
     const fetchOrderHistory = async () => {
-      const userEmail = localStorage.getItem("userEmail"); // ✅ Get email from localStorage
+      const userEmail = localStorage.getItem("userEmail");
 
       if (!userEmail) {
         console.error("User email not found in localStorage");
@@ -20,7 +20,7 @@ export default function OrderHistory() {
         );
         const data = await response.json();
 
-        console.log("Fetched Order History:", data); // ✅ Debugging
+        console.log("Fetched Order History:", data);
 
         if (data.success) {
           setOrders(data.orders);

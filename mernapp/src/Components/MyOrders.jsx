@@ -7,7 +7,6 @@ export default function MyOrders() {
   const navigate = useNavigate();
   const userEmail = localStorage.getItem("userEmail");
 
-  // 🔴 Redirect to login if userEmail is missing
   useEffect(() => {
     console.log("Logged-in User Email:", userEmail);
     if (!userEmail) {
@@ -36,7 +35,7 @@ export default function MyOrders() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            email: userEmail, // ✅ Correct logged-in user email
+            email: userEmail,
             orderData,
           }),
         }
@@ -46,9 +45,9 @@ export default function MyOrders() {
 
       if (data.success) {
         toast.success("Order placed successfully!");
-        localStorage.removeItem("cartData"); // ✅ Clear cart
-        setOrderData([]); // ✅ Update UI
-        navigate("/orderhistory"); // ✅ Redirect to Order History page
+        localStorage.removeItem("cartData");
+        setOrderData([]);
+        navigate("/orderhistory");
       } else {
         toast.error("Failed to place order. Please try again.");
       }
@@ -58,7 +57,7 @@ export default function MyOrders() {
     }
   };
 
-  if (!userEmail) return null; // Prevents rendering if user is not logged in
+  if (!userEmail) return null;
 
   return (
     <div
@@ -126,7 +125,7 @@ export default function MyOrders() {
                   color: "white",
                   marginRight: "5px",
                 }}
-                onClick={handlePlaceOrder} // ✅ Added click event
+                onClick={handlePlaceOrder}
               >
                 Place Order
               </button>

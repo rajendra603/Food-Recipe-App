@@ -37,7 +37,7 @@ export default function Login() {
       } else {
         toast.success(json.message || "Login successful!");
 
-        // ✅ Store token & email in localStorage
+        //  Store token & email in localStorage
         localStorage.setItem("authToken", json.authToken);
         localStorage.setItem("userEmail", credential.email);
 

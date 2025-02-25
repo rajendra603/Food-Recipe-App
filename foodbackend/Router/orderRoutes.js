@@ -6,7 +6,6 @@ const url =
   "mongodb+srv://bansodrajendra23:rajendra23@cluster0.dtuzx.mongodb.net/";
 const dbName = "FoodApp";
 
-// ✅ Place Order
 router.post("/placeorder", async (req, res) => {
   const { email, orderData } = req.body;
 
@@ -36,7 +35,6 @@ router.post("/placeorder", async (req, res) => {
   }
 });
 
-// ✅ Fetch Order History
 router.get("/orderhistory/:email", async (req, res) => {
   const { email } = req.params;
 
@@ -50,13 +48,11 @@ router.get("/orderhistory/:email", async (req, res) => {
     const db = client.db(dbName);
     const ordersCollection = db.collection("orders");
 
-    // 🔴 Debugging: Log all orders
     console.log("Fetching orders for email:", email);
 
     const orders = await ordersCollection.find({ email }).toArray();
 
-    console.log("Orders Found:", orders); // ✅ Log fetched orders
-
+    console.log("Orders Found:", orders);
     await client.close();
     res.json({ success: true, orders });
   } catch (error) {
