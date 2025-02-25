@@ -13,15 +13,12 @@ export default function Home() {
   /// local url =  http://localhost:5000/foodData
   // render url = https://food-app-00un.onrender.com/foodData
   const loadData = async () => {
-    let response = await fetch(
-      "  https://food-app-00un.onrender.com/foodData",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    let response = await fetch(" https://food-app-00un.onrender.com/foodData", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     response = await response.json();
 
     setfoodItem(response[0]);

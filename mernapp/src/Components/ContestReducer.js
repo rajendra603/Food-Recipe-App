@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useReducer } from "react";
 
 const CartStateContext = createContext();
-
 const CartDispatchContext = createContext();
 
 const reducer = (state, action) => {
@@ -18,10 +17,15 @@ const reducer = (state, action) => {
           img: action.img,
         },
       ];
+
     case "REMOVE":
       let newArr = [...state];
       newArr.splice(action.index, 1);
       return newArr;
+
+    case "CLEAR": // ✅ This will empty the cart after checkout
+      return [];
+
     default:
       console.error(`Unknown action type: ${action.type}`);
       return state;

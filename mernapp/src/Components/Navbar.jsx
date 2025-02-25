@@ -106,6 +106,13 @@ export default function Navbar() {
               </div>
             ) : (
               <div>
+                '
+                <div
+                  className="btn bg-white text-success m-3 custom-hover"
+                  onClick={() => navigate("/orderhistory")}
+                >
+                  OrderHistory
+                </div>
                 <div
                   className="btn bg-white text-success m-3 custom-hover"
                   onClick={() => {

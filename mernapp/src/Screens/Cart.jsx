@@ -20,8 +20,11 @@ export default function Cart() {
   const handleCheckout = () => {
     localStorage.setItem("cartData", JSON.stringify(data));
 
+    dispatch({ type: "CLEAR" });
+
     navigate("/myorders");
   };
+
   return (
     <div>
       <div className="container m-auto mt-5 table-responsive table-responsive-sm table-responsive-md">

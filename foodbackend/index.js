@@ -5,6 +5,7 @@ import { getuserRouter } from "./Router/getUserApi.js";
 import cors from "cors";
 import { LoginRouter } from "./Router/LoginUserApis.js";
 import { mongoDB } from "./db.js";
+import orderRoutes from "./Router/orderRoutes.js";
 
 const app = express();
 
@@ -28,6 +29,7 @@ const startServer = async () => {
     app.use("/", displayapis);
     app.use("/", getuserRouter);
     app.use("/", LoginRouter);
+    app.use("/", orderRoutes);
 
     app.listen(process.env.PORT || 5000, () => {
       console.log(`Server is running on port ${process.env.PORT || 5000}`);

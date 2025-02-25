@@ -8,6 +8,7 @@ import Cart from "./Screens/Cart";
 import About from "./Components/About";
 import Contact from "./Components/Contact";
 import MyOrders from "./Components/MyOrders";
+import OrderHistory from "./Components/OrderHistory";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/myorders" element={<MyOrders />} />
+        <Route path="/orderhistory" element={<OrderHistory />} />
       </Routes>
     </CartProvider>
   );
