@@ -1,69 +1,118 @@
-import express from "express";
-import { MongoClient } from "mongodb";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const router = express.Router();
-const url =
-  "mongodb+srv://bansodrajendra23:rajendra23@cluster0.dtuzx.mongodb.net/";
-const dbName = "FoodApp";
+export default function OrderHistory() {
+  const [orders, setOrders] = useState([]);
+  const navigate = useNavigate();
 
-router.post("/placeorder", async (req, res) => {
-  const { email, orderData } = req.body;
+  useEffect(() => {
+    const fetchOrderHistory = async () => {
+      const userEmail = localStorage.getItem("userEmail");
 
-  if (!email || !orderData.length) {
-    return res.status(400).json({ message: "Invalid request" });
-  }
+      if (!userEmail) {
+        console.error("User email not found in localStorage");
+        return;
+      }
 
-  try {
-    const client = new MongoClient(url);
-    await client.connect();
-    const db = client.db(dbName);
-    const ordersCollection = db.collection("orders");
+      try {
+        const response = await fetch(
+          `https://food-app-00un.onrender.com/orderhistory/${userEmail}`
+        );
+        const data = await response.json();
 
-    const order = {
-      email,
-      orderData: orderData.map((item) => ({
-        name: item.name,
-        qty: item.qty,
-        size: item.size,
-        price: item.price / item.qty,
-      })),
-      date: new Date(),
+        console.log("Fetched Order History:", data);
+
+        if (data.success) {
+          setOrders(data.orders);
+        } else {
+          console.error("Failed to fetch order history");
+        }
+      } catch (error) {
+        console.error("Error fetching order history:", error);
+      }
     };
 
-    await ordersCollection.insertOne(order);
-    await client.close();
+    fetchOrderHistory();
+  }, []);
 
-    res.json({ success: true, message: "Order placed successfully" });
-  } catch (error) {
-    console.error("Error placing order:", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-});
+  return (
+    <div className="container mt-5">
+      <h2
+        className="text-center p-2"
+        style={{
+          backgroundColor: "#8B4513",
+          color: "white",
+          borderRadius: "5px",
+        }}
+      >
+        Order History
+      </h2>
+      <button className="btn btn-success mt-3" onClick={() => navigate("/")}>
+        Back to Home
+      </button>
 
-router.get("/orderhistory/:email", async (req, res) => {
-  const { email } = req.params;
+      {orders.length === 0 ? (
+        <h3 className="text-danger text-center mt-4">
+          No order history available!
+        </h3>
+      ) : (
+        <table className="table table-hover mt-4">
+          <thead className="text-success fs-4">
+            <tr>
+              <th>Date & Time</th>
+              <th>Items</th>
+              <th>Total Amount (₹)</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders.map((order, index) => {
+              // Fix: Ensure correct total amount calculation
+              const totalAmount =
+                order.orderData?.reduce((sum, item) => {
+                  const itemTotal = item.price * item.qty;
+                  console.log(
+                    `Item: ${item.name}, Price: ₹${item.price}, Qty: ${item.qty}, Total: ₹${itemTotal}`
+                  );
+                  return sum + itemTotal;
+                }, 0) || 0;
 
-  if (!email) {
-    return res.status(400).json({ message: "Invalid request" });
-  }
-
-  try {
-    const client = new MongoClient(url);
-    await client.connect();
-    const db = client.db(dbName);
-    const ordersCollection = db.collection("orders");
-
-    console.log("Fetching orders for email:", email);
-
-    const orders = await ordersCollection.find({ email }).toArray();
-
-    console.log("Orders Found:", orders);
-    await client.close();
-    res.json({ success: true, orders });
-  } catch (error) {
-    console.error("Error fetching order history:", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-});
-
-export default router;
+              return (
+                <tr key={index}>
+                  <td>
+                    {order.date ? new Date(order.date).toLocaleString() : "N/A"}
+                  </td>
+                  <td>
+                    {order.orderData && order.orderData.length > 0 ? (
+                      order.orderData.map((item, i) => (
+                        <div key={i}>
+                          {item.name} ({item.qty}x {item.size}) - ₹
+                          {item.price * item.qty}
+                        </div>
+                      ))
+                    ) : (
+                      <span className="text-muted">No items available</span>
+                    )}
+                  </td>
+                  <td className="fw-bold">₹{totalAmount}</td>
+                  <td>
+                    <span
+                      className="badge"
+                      style={{
+                        backgroundColor:
+                          order.status === "Completed" ? "blue" : "green",
+                        color: "white",
+                      }}
+                    >
+                      {order.status || "Active"}
+                    </span>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
+}
