@@ -119,21 +119,15 @@ export default function MyOrders() {
 
             <div>
               <button
-                className="btn"
+                className="btn btn-success"
                 style={{
-                  backgroundColor: "#8B4513",
-                  color: "white",
                   marginRight: "5px",
                 }}
                 onClick={handlePlaceOrder}
               >
                 Place Order
               </button>
-              <button
-                className="btn"
-                style={{ backgroundColor: "#8B4513", color: "white" }}
-                onClick={() => navigate("/")}
-              >
+              <button className="btn btn-danger" onClick={() => navigate("/")}>
                 Back to Home
               </button>
             </div>
