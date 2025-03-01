@@ -21,7 +21,12 @@ router.post("/placeorder", async (req, res) => {
 
     const order = {
       email,
-      orderData,
+      orderData: orderData.map((item) => ({
+        name: item.name,
+        qty: item.qty,
+        size: item.size,
+        price: item.price / item.qty,
+      })),
       date: new Date(),
     };
 
