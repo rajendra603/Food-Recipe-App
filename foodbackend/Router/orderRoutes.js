@@ -6,11 +6,14 @@ const url =
   "mongodb+srv://bansodrajendra23:rajendra23@cluster0.dtuzx.mongodb.net/";
 const dbName = "FoodApp";
 
+// 📌 Place Order Route
 router.post("/placeorder", async (req, res) => {
   const { email, orderData } = req.body;
 
-  if (!email || !orderData.length) {
-    return res.status(400).json({ message: "Invalid request" });
+  if (!email || !orderData || orderData.length === 0) {
+    return res
+      .status(400)
+      .json({ message: "Invalid request. Email or order data missing!" });
   }
 
   try {
@@ -18,28 +21,44 @@ router.post("/placeorder", async (req, res) => {
     await client.connect();
     const db = client.db(dbName);
     const ordersCollection = db.collection("orders");
+
+    // ✅ Correctly Calculate Total Amount
+    let totalAmount = orderData.reduce(
+      (sum, item) => sum + item.price * item.qty,
+      0
+    );
 
     const order = {
       email,
       orderData,
+      totalAmount, // Store the correct total amount
       date: new Date(),
     };
+
+    console.log("✅ Placing Order:", order);
 
     await ordersCollection.insertOne(order);
     await client.close();
 
-    res.json({ success: true, message: "Order placed successfully" });
+    res.json({
+      success: true,
+      message: "Order placed successfully",
+      totalAmount,
+    });
   } catch (error) {
-    console.error("Error placing order:", error);
+    console.error("❌ Error placing order:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });
 
+// 📌 Fetch Order History Route
 router.get("/orderhistory/:email", async (req, res) => {
   const { email } = req.params;
 
   if (!email) {
-    return res.status(400).json({ message: "Invalid request" });
+    return res
+      .status(400)
+      .json({ message: "Invalid request. Email is missing!" });
   }
 
   try {
@@ -48,15 +67,16 @@ router.get("/orderhistory/:email", async (req, res) => {
     const db = client.db(dbName);
     const ordersCollection = db.collection("orders");
 
-    console.log("Fetching orders for email:", email);
+    console.log("📌 Fetching orders for:", email);
 
     const orders = await ordersCollection.find({ email }).toArray();
 
-    console.log("Orders Found:", orders);
+    console.log("✅ Orders Found:", orders);
     await client.close();
+
     res.json({ success: true, orders });
   } catch (error) {
-    console.error("Error fetching order history:", error);
+    console.error("❌ Error fetching order history:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });
