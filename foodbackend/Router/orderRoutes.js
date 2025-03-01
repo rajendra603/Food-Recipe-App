@@ -22,7 +22,7 @@ router.post("/placeorder", async (req, res) => {
     const db = client.db(dbName);
     const ordersCollection = db.collection("orders");
 
-    // ✅ Correctly Calculate Total Amount
+    // ✅ Store the Correct Total Amount
     let totalAmount = orderData.reduce(
       (sum, item) => sum + item.price * item.qty,
       0
@@ -31,8 +31,9 @@ router.post("/placeorder", async (req, res) => {
     const order = {
       email,
       orderData,
-      totalAmount, // Store the correct total amount
+      totalAmount, // ✅ Store total amount in database
       date: new Date(),
+      status: "Pending",
     };
 
     console.log("✅ Placing Order:", order);
