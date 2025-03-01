@@ -38,12 +38,16 @@ export default function OrderHistory() {
   return (
     <div className="container mt-5">
       <h2
-        className="text-center"
-        style={{ backgroundColor: "#8B4513", color: "white" }}
+        className="text-center p-2"
+        style={{
+          backgroundColor: "#8B4513",
+          color: "white",
+          borderRadius: "5px",
+        }}
       >
         Order History
       </h2>
-      <button className="btn btn-success" onClick={() => navigate("/")}>
+      <button className="btn btn-success mt-3" onClick={() => navigate("/")}>
         Back to Home
       </button>
 
@@ -55,32 +59,53 @@ export default function OrderHistory() {
         <table className="table table-hover mt-4">
           <thead className="text-success fs-4">
             <tr>
-              <th>Date</th>
+              <th>Date & time</th>
               <th>Items</th>
+              <th>Total Amount (₹)</th>
               <th>Status</th>
             </tr>
           </thead>
           <tbody>
-            {orders.map((order, index) => (
-              <tr key={index}>
-                <td>{new Date(order.date).toLocaleString()}</td>
-                <td>
-                  {order.orderData.map((item, i) => (
-                    <div key={i}>
-                      {item.name} ({item.qty}x {item.size}) - ₹{item.price}
-                    </div>
-                  ))}
-                </td>
-                <td>
-                  <span
-                    className="badge"
-                    style={{ backgroundColor: "green", color: "white" }}
-                  >
-                    Active
-                  </span>
-                </td>
-              </tr>
-            ))}
+            {orders.map((order, index) => {
+              const totalAmount =
+                order.orderData?.reduce(
+                  (sum, item) => sum + item.price * item.qty,
+                  0
+                ) || 0;
+
+              return (
+                <tr key={index}>
+                  <td>
+                    {order.date ? new Date(order.date).toLocaleString() : "N/A"}
+                  </td>
+                  <td>
+                    {order.orderData && order.orderData.length > 0 ? (
+                      order.orderData.map((item, i) => (
+                        <div key={i}>
+                          {item.name} ({item.qty}x {item.size}) - ₹
+                          {item.price * item.qty}
+                        </div>
+                      ))
+                    ) : (
+                      <span className="text-muted">No items available</span>
+                    )}
+                  </td>
+                  <td className="fw-bold">₹{totalAmount}</td>
+                  <td>
+                    <span
+                      className="badge"
+                      style={{
+                        backgroundColor:
+                          order.status === "Completed" ? "blue" : "green",
+                        color: "white",
+                      }}
+                    >
+                      {order.status || "Active"}
+                    </span>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       )}
