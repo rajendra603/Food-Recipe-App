@@ -1,7 +1,15 @@
 import React from "react";
 import { FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
+import { toast } from "react-toastify";
 export default function Contact() {
+  function handlefeedbacksubmit() {
+    toast.success("feeback Submitted");
+    navigate("/");
+  }
+
+  const navigate = useNavigate();
   return (
     <div>
       <Navbar />
@@ -58,6 +66,7 @@ export default function Contact() {
             <button
               className="btn  w-100 "
               style={{ backgroundColor: "#8B4513", color: "white" }}
+              onClick={handlefeedbacksubmit}
             >
               Submit Feedback
             </button>
