@@ -6,7 +6,6 @@ const url =
   "mongodb+srv://bansodrajendra23:rajendra23@cluster0.dtuzx.mongodb.net/";
 const dbName = "FoodApp";
 
-// 📌 Place Order Route
 router.post("/placeorder", async (req, res) => {
   const { email, orderData } = req.body;
 
@@ -22,7 +21,6 @@ router.post("/placeorder", async (req, res) => {
     const db = client.db(dbName);
     const ordersCollection = db.collection("orders");
 
-    // ✅ Correctly Calculate Total Amount
     let totalAmount = orderData.reduce(
       (sum, item) => sum + item.price * item.qty,
       0
@@ -31,11 +29,11 @@ router.post("/placeorder", async (req, res) => {
     const order = {
       email,
       orderData,
-      totalAmount, // Store the correct total amount
+      totalAmount,
       date: new Date(),
     };
 
-    console.log("✅ Placing Order:", order);
+    console.log(" Placing Order:", order);
 
     await ordersCollection.insertOne(order);
     await client.close();
@@ -46,12 +44,11 @@ router.post("/placeorder", async (req, res) => {
       totalAmount,
     });
   } catch (error) {
-    console.error("❌ Error placing order:", error);
+    console.error(" Error placing order:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });
 
-// 📌 Fetch Order History Route
 router.get("/orderhistory/:email", async (req, res) => {
   const { email } = req.params;
 
@@ -67,7 +64,7 @@ router.get("/orderhistory/:email", async (req, res) => {
     const db = client.db(dbName);
     const ordersCollection = db.collection("orders");
 
-    console.log("📌 Fetching orders for:", email);
+    console.log(" Fetching orders for:", email);
 
     const orders = await ordersCollection.find({ email }).toArray();
 
@@ -76,7 +73,7 @@ router.get("/orderhistory/:email", async (req, res) => {
 
     res.json({ success: true, orders });
   } catch (error) {
-    console.error("❌ Error fetching order history:", error);
+    console.error("Error fetching order history:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });

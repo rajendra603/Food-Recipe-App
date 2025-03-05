@@ -23,7 +23,7 @@ const reducer = (state, action) => {
       newArr.splice(action.index, 1);
       return newArr;
 
-    case "CLEAR": // ✅ This will empty the cart after checkout
+    case "CLEAR":
       return [];
 
     default:

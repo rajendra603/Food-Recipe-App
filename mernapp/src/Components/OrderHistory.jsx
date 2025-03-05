@@ -1,92 +1,3 @@
-// import React, { useEffect, useState } from "react";
-// import { useNavigate } from "react-router-dom";
-
-// export default function OrderHistory() {
-//   const [orders, setOrders] = useState([]);
-//   const navigate = useNavigate();
-
-//   useEffect(() => {
-//     const fetchOrderHistory = async () => {
-//       const userEmail = localStorage.getItem("userEmail");
-
-//       if (!userEmail) {
-//         console.error("User email not found in localStorage");
-//         return;
-//       }
-
-//       try {
-//         const response = await fetch(
-//           `https://food-app-00un.onrender.com/orderhistory/${userEmail}`
-//         );
-//         const data = await response.json();
-
-//         console.log("Fetched Order History:", data);
-
-//         if (data.success) {
-//           setOrders(data.orders);
-//         } else {
-//           console.error("Failed to fetch order history");
-//         }
-//       } catch (error) {
-//         console.error("Error fetching order history:", error);
-//       }
-//     };
-
-//     fetchOrderHistory();
-//   }, []);
-
-//   return (
-//     <div className="container mt-5">
-//       <h2
-//         className="text-center"
-//         style={{ backgroundColor: "#8B4513", color: "white" }}
-//       >
-//         Order History
-//       </h2>
-//       <button className="btn btn-success" onClick={() => navigate("/")}>
-//         Back to Home
-//       </button>
-
-//       {orders.length === 0 ? (
-//         <h3 className="text-danger text-center mt-4">
-//           No order history available!
-//         </h3>
-//       ) : (
-//         <table className="table table-hover mt-4">
-//           <thead className="text-success fs-4">
-//             <tr>
-//               <th>Date</th>
-//               <th>Items</th>
-//               <th>Status</th>
-//             </tr>
-//           </thead>
-//           <tbody>
-//             {orders.map((order, index) => (
-//               <tr key={index}>
-//                 <td>{new Date(order.date).toLocaleString()}</td>
-//                 <td>
-//                   {order.orderData.map((item, i) => (
-//                     <div key={i}>
-//                       {item.name} ({item.qty}x {item.size}) - ₹{item.price}
-//                     </div>
-//                   ))}
-//                 </td>
-//                 <td>
-//                   <span
-//                     className="badge"
-//                     style={{ backgroundColor: "green", color: "white" }}
-//                   >
-//                     Active
-//                   </span>
-//                 </td>
-//               </tr>
-//             ))}
-//           </tbody>
-//         </table>
-//       )}
-//     </div>
-//   );
-// }
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -164,12 +75,10 @@ export default function OrderHistory() {
 
               const totalAmount =
                 order.orderData?.reduce((sum, item) => {
-                  const price = item?.price ? parseFloat(item.price) : 0;
-                  const qty = item?.qty ? parseInt(item.qty, 10) : 1;
-                  console.log(
-                    `Item: ${item?.name}, Price: ₹${price}, Qty: ${qty}`
-                  );
-                  return sum + price * qty;
+                  const totalItemPrice = item?.price
+                    ? parseFloat(item.price)
+                    : 0;
+                  return sum + totalItemPrice;
                 }, 0) || 0;
 
               return (
@@ -182,7 +91,7 @@ export default function OrderHistory() {
                       order.orderData.map((item, i) => (
                         <div key={i}>
                           {item.name} ({item.qty} x {item.size}) - ₹
-                          {item.price * item.qty}
+                          {parseFloat(item.price).toFixed(2)}
                         </div>
                       ))
                     ) : (
